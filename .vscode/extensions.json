@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "hashicorp.terraform",
+    "mikael.terraform-doc-snippets",
+    "AmazonWebServices.aws-toolkit-vscode",
+    "redhat.vscode-yaml",
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "shd101wyy.markdown-preview-enhanced",
+    "rangav.vscode-thunder-client",
+    "eriklynd.json-tools",
+    "esbenp.prettier-vscode"
+  ]
+}

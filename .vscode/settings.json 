@@ -1,0 +1,39 @@
+{
+  "[hcl]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "terraform.languageServer": {
+    "enable": true,
+    "args": []
+  },
+  "terraform.validation.enabled": true,
+  "terraform.formatting.ignoreMultilineInterpolation": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "hashicorp.terraform",
+  "files.exclude": {
+    "**/.terraform": true,
+    "**/.terraform.lock.hcl": false,
+    "**/terraform.tfstate": true,
+    "**/terraform.tfstate.*": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}
