@@ -55,7 +55,7 @@ jobs:
     
     steps:
       - name: Approve Deployment
-        run: echo "✅ Deployment approved! Image: ${{ needs.build.outputs.image }}"
+        run: echo "Deployment approved"
 
   deploy:
     name: Deploy to EC2
@@ -84,11 +84,4 @@ jobs:
           echo "$EC2_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_IP >> ~/.ssh/known_hosts 2>/dev/null || true
-          
-          ssh -i ~/.ssh/id_rsa ec2-user@$EC2_IP << 'SSHEOF'
-          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-          docker pull $IMAGE
-          docker stop nginx-server || true
-          docker rm nginx-server || true
-          docker run -d -p 80:80 --name nginx-server $IMAGE
-          SSHEOF
+          ssh -i ~/.ssh/id_rsa ec2-user@$EC2_IP "aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_REGISTRY && docker pull $IMAGE && docker stop nginx-server || true && docker rm nginx-server || true && docker run -d -p 80:80 --name nginx-server $IMAGE"
