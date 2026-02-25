@@ -50,9 +50,7 @@ jobs:
     name: Deploy to EC2
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: http://${{ secrets.EC2_PUBLIC_IP }}
+    environment: production
     
     steps:
       - name: Checkout code
