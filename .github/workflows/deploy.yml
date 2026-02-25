@@ -1,0 +1,94 @@
+name: Build and Deploy to ECR
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docker/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-west-1
+  ECR_REPOSITORY: medici-assessment-ecr
+  IMAGE_TAG: latest
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./docker
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  approval:
+    name: Manual Approval
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    
+    steps:
+      - name: Approve Deployment
+        run: echo "✅ Deployment approved! Image: ${{ needs.build.outputs.image }}"
+
+  deploy:
+    name: Deploy to EC2
+    needs: [build, approval]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to EC2
+        env:
+          EC2_IP: ${{ secrets.EC2_PUBLIC_IP }}
+          EC2_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          IMAGE: ${{ needs.build.outputs.image }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$EC2_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $EC2_IP >> ~/.ssh/known_hosts 2>/dev/null || true
+          
+          ssh -i ~/.ssh/id_rsa ec2-user@$EC2_IP << 'SSHEOF'
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+          docker pull $IMAGE
+          docker stop nginx-server || true
+          docker rm nginx-server || true
+          docker run -d -p 80:80 --name nginx-server $IMAGE
+          SSHEOF
