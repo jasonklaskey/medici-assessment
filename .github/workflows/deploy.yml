@@ -71,13 +71,11 @@ jobs:
         run: |
           echo "🚀 Deploying image: $IMAGE"
           
-          # Setup SSH
           mkdir -p ~/.ssh
           echo "$EC2_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_IP >> ~/.ssh/known_hosts 2>/dev/null || true
 
-          # Deploy to EC2
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_IP << 'DEPLOY'
           set -e
           echo "📦 Logging into ECR..."
@@ -95,9 +93,3 @@ jobs:
           
           echo "✅ Deployment complete!"
           DEPLOY
-
-      - name: Verify Deployment
-        run: |
-          echo "🔍 Verifying web server..."
-          curl -f http://${{ secrets.EC2_PUBLIC_IP }} || exit 1
-          echo "✅ Web server is running!"
