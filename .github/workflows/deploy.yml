@@ -18,10 +18,10 @@ jobs:
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
-    
+
     outputs:
       image: ${{ steps.image.outputs.image }}
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -46,14 +46,14 @@ jobs:
           docker build -t $IMAGE_URI ./docker
           docker push $IMAGE_URI
           echo "image=$IMAGE_URI" >> $GITHUB_OUTPUT
-          echo "Image pushed: $IMAGE_URI"
+          echo "✅ Image pushed: $IMAGE_URI"
 
   deploy:
     name: Deploy to EC2
     needs: build
     runs-on: ubuntu-latest
     environment: medici-assessment
-    
+
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -69,18 +69,35 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           IMAGE: ${{ needs.build.outputs.image }}
         run: |
-          echo "Image to deploy: $IMAGE"
+          echo "🚀 Deploying image: $IMAGE"
           
+          # Setup SSH
           mkdir -p ~/.ssh
           echo "$EC2_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_IP >> ~/.ssh/known_hosts 2>/dev/null || true
-          
+
+          # Deploy to EC2
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ec2-user@$EC2_IP << 'DEPLOY'
+          set -e
+          echo "📦 Logging into ECR..."
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+          
+          echo "📥 Pulling image: $IMAGE"
           docker pull $IMAGE
+          
+          echo "🛑 Stopping old container..."
           docker stop nginx-server || true
           docker rm nginx-server || true
+          
+          echo "🚀 Starting new container..."
           docker run -d -p 80:80 --name nginx-server $IMAGE
-          echo "Deployment complete!"
+          
+          echo "✅ Deployment complete!"
           DEPLOY
+
+      - name: Verify Deployment
+        run: |
+          echo "🔍 Verifying web server..."
+          curl -f http://${{ secrets.EC2_PUBLIC_IP }} || exit 1
+          echo "✅ Web server is running!"
