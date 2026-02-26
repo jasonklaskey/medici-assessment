@@ -2,7 +2,7 @@
 
 A complete, production-ready AWS DevOps infrastructure with automated CI/CD pipeline, containerization, and infrastructure-as-code.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project demonstrates a fully automated DevOps pipeline that:
 - Provisions AWS infrastructure using Terraform & Terragrunt
@@ -12,7 +12,7 @@ This project demonstrates a fully automated DevOps pipeline that:
 - Manages databases with RDS MySQL
 - Implements security best practices
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - AWS Account with appropriate permissions
@@ -22,10 +22,13 @@ This project demonstrates a fully automated DevOps pipeline that:
 - AWS CLI configured
 
 ### Deployment
-
+```bash
 git clone https://github.com/jasonklaskey/medici-assessment.git
 cd medici-assessment
 ./infrastructure.sh
+```
+
+---
 
 The script will:
 1. Show you the Terraform plan
@@ -33,7 +36,7 @@ The script will:
 3. Deploy all infrastructure
 4. Ask if you want to destroy (optional)
 
-## 📋 Infrastructure Components
+## Infrastructure Components
 
 ### VPC & Networking
 - VPC CIDR: 10.0.0.0/16
@@ -59,7 +62,7 @@ The script will:
 - Image Scanning: Enabled on push
 - Lifecycle Policy: Keep last 10 images
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### GitHub Actions Workflow
 
@@ -85,45 +88,57 @@ The script will:
 - Location: .github/workflows/deploy.yml
 - Environment: medici-assessment (requires approval)
 
-## 🧪 Testing
+## Testing
 
 See TESTING_GUIDE.md for comprehensive testing procedures.
 
 ### Quick Tests
-
+```bash
 curl http://34.255.179.146
 ssh -i medici-assessment-key.pem ec2-user@34.255.179.146
 docker ps
-mysql -h <RDS_ENDPOINT> -u admin -p devopsdb
+mysql -h RDS_ENDPOINT -u admin -p devopsdb
+```
 
-## 📊 Project Structure
+---
 
-medici-assessment/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml
-├── docker/
-│   ├── Dockerfile
-│   └── index.html
-├── terraform/
-│   ├── environments/
-│   │   └── dev/
-│   │       ├── vpc/
-│   │       ├── security-groups/
-│   │       ├── ec2/
-│   │       ├── rds/
-│   │       └── ecr/
-│   └── terragrunt.hcl
-├── infrastructure.sh
+## Project Structure
+```
 ├── deploy-all.sh
 ├── destroy-all.sh
+├── docker
+│   ├── Dockerfile
+│   └── index.html
+├── docs
+├── infrastructure.sh
+├── install-vscode-extensions.sh
 ├── README.md
+├── terraform
+│   └── environments
+│       └── dev
+│           ├── ec2
+│           │   ├── main.tf
+│           │   └── terragrunt.hcl
+│           ├── ecr
+│           │   ├── main.tf
+│           │   └── terragrunt.hcl
+│           ├── rds
+│           │   ├── main.tf
+│           │   └── terragrunt.hcl
+│           ├── security-groups
+│           │   ├── main.tf
+│           │   └── terragrunt.hcl
+│           └── vpc
+│               ├── main.tf
+│               ├── terragrunt.hcl
+│               └── variables.tf
+├── terragrunt.hcl
 ├── TESTING_GUIDE.md
 ├── ARCHITECTURE.md
 ├── DEPLOYMENT_GUIDE.md
 └── CTO_PRESENTATION.md
-
-## 🔐 Security
+```
+## Security
 
 - VPC Isolation: Private subnets for database
 - Security Groups: Least privilege access
@@ -132,7 +147,7 @@ medici-assessment/
 - Encryption: RDS encryption enabled
 - Backup: Automated daily backups with 7-day retention
 
-## 💰 Cost Optimization
+## Cost Optimization
 
 - t3.micro EC2: Free tier eligible
 - db.t3.micro RDS: Free tier eligible
@@ -142,13 +157,13 @@ medici-assessment/
 
 Estimated Monthly Cost: $35-50 (excluding data transfer)
 
-## 📈 Monitoring & Logging
+## Monitoring & Logging
 
 - CloudWatch Logs: RDS error, general, and slow query logs
 - EC2 Logs: Available via Systems Manager Session Manager
 - Docker Logs: Accessible via docker logs nginx-server
 
-## 🔄 Maintenance
+## Maintenance
 
 ### Regular Tasks
 - Monitor ECR image storage
@@ -161,31 +176,37 @@ Estimated Monthly Cost: $35-50 (excluding data transfer)
 - Enable RDS read replicas for read-heavy workloads
 - Use Application Load Balancer for multiple EC2 instances
 
-## 📚 Documentation
+## Documentation
 
 - TESTING_GUIDE.md - Complete testing procedures
 - ARCHITECTURE.md - Detailed architecture
 - DEPLOYMENT_GUIDE.md - Step-by-step deployment
 - CTO_PRESENTATION.md - Executive summary
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### EC2 Not Accessible
-
+```bash
 aws ec2 describe-security-groups --group-ids sg-xxxxx
 aws ec2 describe-instances --instance-ids i-xxxxx
+```
+
+---
 
 ### RDS Connection Failed
-
+```bash
 aws ec2 describe-security-groups --group-ids sg-xxxxx
 aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db
+```
+
+---
 
 ### GitHub Actions Failing
 - Check secrets are set correctly
 - Verify AWS credentials have proper permissions
 - Check EC2 security group allows SSH from GitHub runners
 
-## 📞 Support
+## Support
 
 For issues or questions:
 1. Check TESTING_GUIDE.md
@@ -193,15 +214,15 @@ For issues or questions:
 3. Check GitHub Actions logs
 4. Review AWS CloudWatch logs
 
-## 📄 License
+## License
 
 This project is part of the Medici Assessment.
 
-## 👤 Author
+## Author
 
 Jason Laskey
 
-## 🔗 Links
+## Links
 
 - GitHub: https://github.com/jasonklaskey/medici-assessment
 - AWS Region: eu-west-1 (Ireland)
