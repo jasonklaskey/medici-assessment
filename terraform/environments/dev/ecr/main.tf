@@ -3,7 +3,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 5.50"
     }
   }
 
@@ -37,10 +37,11 @@ variable "project_name" {
   type        = string
 }
 
-# ECR Repository
+# ECR Repository with force_delete
 resource "aws_ecr_repository" "main" {
-  name                 = "${var.project_name}-ecr"
+  name             = "${var.project_name}-ecr"
   image_tag_mutability = "MUTABLE"
+  force_delete     = true
 
   image_scanning_configuration {
     scan_on_push = true
@@ -51,7 +52,7 @@ resource "aws_ecr_repository" "main" {
   }
 }
 
-# ECR Lifecycle Policy - Keep only last 10 images
+# ECR Lifecycle Policy
 resource "aws_ecr_lifecycle_policy" "main" {
   repository = aws_ecr_repository.main.name
 
