@@ -2,7 +2,7 @@
 
 ## AWS Infrastructure Network Architecture
 
-==>bash
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                                                               │
 │                          AWS Region: eu-west-1                              │
@@ -76,7 +76,7 @@
                     │   medici-assessment-ecr   │
                     │   (Container Images)      │
                     └───────────────────────────┘
-==>
+```
 
 ## Security Groups Configuration
 
