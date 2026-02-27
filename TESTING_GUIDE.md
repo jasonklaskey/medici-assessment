@@ -28,7 +28,12 @@ The VPC is the foundation of your infrastructure. Testing it ensures network iso
 **What This Tests:** Confirms the VPC exists with correct CIDR block
 
 **Step-by-Step:**
-1. Run: aws ec2 describe-vpcs --filters "Name=tag:Name,Values=medici-assessment-vpc" --region eu-west-1 --output table
+1. Run the following command:
+
+```bash
+aws ec2 describe-vpcs --filters "Name=tag:Name,Values=medici-assessment-vpc" --region eu-west-1 --output table
+```
+
 2. Look for output table
 
 **Expected Output:**
@@ -48,7 +53,12 @@ The VPC is the foundation of your infrastructure. Testing it ensures network iso
 **What This Tests:** Confirms all 4 subnets exist (2 public, 2 private)
 
 **Step-by-Step:**
-1. Run: aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-00fc5214e94436ece" --region eu-west-1 --output table
+1. Run the following command:
+
+```bash
+aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-00fc5214e94436ece" --region eu-west-1 --output table
+```
+
 2. Count subnets in output
 
 **Expected Output:**
@@ -68,7 +78,12 @@ The EC2 instance runs your web server. Testing ensures it's running, accessible,
 **What This Tests:** Confirms EC2 instance exists and is running
 
 **Step-by-Step:**
-1. Run: aws ec2 describe-instances --filters "Name=tag:Name,Values=medici-assessment-web-server" --region eu-west-1 --output table
+1. Run the following command:
+
+```bash
+aws ec2 describe-instances --filters "Name=tag:Name,Values=medici-assessment-web-server" --region eu-west-1 --output table
+```
+
 2. Look for State field
 
 **Expected Output:**
@@ -84,7 +99,11 @@ The EC2 instance runs your web server. Testing ensures it's running, accessible,
 **What This Tests:** Confirms you can SSH into the EC2 instance
 
 **Step-by-Step:**
-1. Run: ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146 "echo 'SSH works!'"
+1. Run the following command:
+
+```bash
+ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146 "echo 'SSH works!'"
+```
 
 **Expected Output:**
 - SSH works!
@@ -106,7 +125,12 @@ The web server serves your application. Testing ensures Nginx is running, Docker
 **What This Tests:** Confirms web server is accessible from your computer
 
 **Step-by-Step:**
-1. Run: curl http://34.255.179.146
+1. Run the following command:
+
+```bash
+curl http://34.255.179.146
+```
+
 2. Look at HTML output
 
 **Expected Output:**
@@ -125,8 +149,18 @@ The web server serves your application. Testing ensures Nginx is running, Docker
 **What This Tests:** Confirms Docker container is running
 
 **Step-by-Step:**
-1. SSH into EC2: ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146
-2. Run: docker ps
+1. SSH into EC2:
+
+```bash
+ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146
+```
+
+2. Run the following command:
+
+```bash
+docker ps
+```
+
 3. Look for nginx-server container
 
 **Expected Output:**
@@ -147,7 +181,11 @@ The RDS database stores your data. Testing ensures it's running, accessible, and
 **What This Tests:** Confirms RDS instance exists and is available
 
 **Step-by-Step:**
-1. Run: aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db --region eu-west-1 --output table
+1. Run the following command:
+
+```bash
+aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db --region eu-west-1 --output table
+```
 
 **Expected Output:**
 - DBInstanceIdentifier: medici-assessment-mysql-db
@@ -164,9 +202,23 @@ The RDS database stores your data. Testing ensures it's running, accessible, and
 
 **Step-by-Step:**
 1. SSH into EC2
-2. Run: mysql -h medici-assessment-mysql-db.c9lvr00r4btz.eu-west-1.rds.amazonaws.com -u admin -p'>1k[*dP$U]eFi7Ek' devopsdb
-3. Run: SHOW DATABASES;
-4. Run: EXIT;
+2. Run the following command:
+
+```bash
+mysql -h medici-assessment-mysql-db.c9lvr00r4btz.eu-west-1.rds.amazonaws.com -u admin -p'>1k[*dP$U]eFi7Ek' devopsdb
+```
+
+3. Run the following command:
+
+```bash
+SHOW DATABASES;
+```
+
+4. Run the following command:
+
+```bash
+EXIT;
+```
 
 **Expected Output:**
 - Connected successfully
@@ -180,10 +232,29 @@ The RDS database stores your data. Testing ensures it's running, accessible, and
 
 **Step-by-Step:**
 1. Connect to RDS (from previous test)
-2. Create table: CREATE TABLE test_connection (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-3. Insert data: INSERT INTO test_connection (message) VALUES ('Connection successful!');
-4. Verify: SELECT * FROM test_connection;
-5. Exit: EXIT;
+2. Create table:
+
+```bash
+CREATE TABLE test_connection (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+```
+
+3. Insert data:
+
+```bash
+INSERT INTO test_connection (message) VALUES ('Connection successful!');
+```
+
+4. Verify:
+
+```bash
+SELECT * FROM test_connection;
+```
+
+5. Exit:
+
+```bash
+EXIT;
+```
 
 **Expected Output:**
 - Table created
@@ -201,12 +272,17 @@ GitHub Actions automates your deployment. Testing ensures workflow triggers, bui
 **What This Tests:** Confirms workflow starts when you push code
 
 **Step-by-Step:**
-1. Run: cd /Users/jasonlaskey/Projects/medici-assessment
-2. Run: echo "# Test $(date)" >> docker/index.html
-3. Run: git add docker/index.html
-4. Run: git commit -m "Test: Trigger workflow"
-5. Run: git push origin main
-6. Go to: https://github.com/jasonklaskey/medici-assessment/actions
+1. Run the following commands:
+
+```bash
+cd /Users/jasonlaskey/Projects/medici-assessment
+echo "# Test $(date)" >> docker/index.html
+git add docker/index.html
+git commit -m "Test: Trigger workflow"
+git push origin main
+```
+
+2. Go to: https://github.com/jasonklaskey/medici-assessment/actions
 
 **Expected Output:**
 - New workflow run appears
@@ -254,8 +330,17 @@ GitHub Actions automates your deployment. Testing ensures workflow triggers, bui
 
 **Step-by-Step:**
 1. Wait for deployment to complete
-2. Run: curl http://34.255.179.146
-3. SSH into EC2 and run: docker ps
+2. Run the following command:
+
+```bash
+curl http://34.255.179.146
+```
+
+3. SSH into EC2 and run:
+
+```bash
+docker ps
+```
 
 **Expected Output:**
 - ✅ Deployment complete
@@ -290,10 +375,10 @@ GitHub Actions automates your deployment. Testing ensures workflow triggers, bui
 
 Run these tests weekly:
 
-==>bash
+```bash
 curl http://34.255.179.146
 aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db --region eu-west-1
-==>
+```
 
 ---
 
