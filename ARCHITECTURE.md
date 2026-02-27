@@ -32,13 +32,13 @@ CI/CD Pipeline:
 
 ### VPC Design
 
-==>bash
+```
 VPC: 10.0.0.0/16
 Public Subnet 1: 10.0.1.0/24 (eu-west-1a)
 Public Subnet 2: 10.0.2.0/24 (eu-west-1b)
 Private Subnet 1: 10.0.10.0/24 (eu-west-1a)
 Private Subnet 2: 10.0.11.0/24 (eu-west-1b)
-==>
+```
 
 ### Routing
 
@@ -54,7 +54,7 @@ Private Route Table:
 
 EC2 Security Group:
 
-==>bash
+```
 Inbound:
 - HTTP (80) from 0.0.0.0/0
 - HTTPS (443) from 0.0.0.0/0
@@ -62,17 +62,17 @@ Inbound:
 
 Outbound:
 - All traffic to 0.0.0.0/0
-==>
+```
 
 RDS Security Group:
 
-==>bash
+```
 Inbound:
 - MySQL (3306) from EC2 SG only
 
 Outbound:
 - All traffic to 0.0.0.0/0
-==>
+```
 
 ## Compute Architecture
 
@@ -142,7 +142,7 @@ Pipeline Stages:
 
 ### Terraform Structure
 
-==>bash
+```
 terraform/
 ├── environments/
 │   └── dev/
@@ -152,7 +152,7 @@ terraform/
 │       ├── rds/
 │       └── ecr/
 └── terragrunt.hcl
-==>
+```
 
 ## Security Architecture
 
@@ -210,7 +210,7 @@ Total: $35-50
 
 GitHub -> GitHub Actions -> ECR -> EC2 + RDS
 
-==>bash
+```
 1. Developer pushes code to GitHub
 2. GitHub Actions workflow triggers
 3. Docker image is built
@@ -221,7 +221,7 @@ GitHub -> GitHub Actions -> ECR -> EC2 + RDS
 8. Old container is stopped
 9. New container is started
 10. Web server serves updated content
-==>
+```
 
 ## Design Decisions
 
