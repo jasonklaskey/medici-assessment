@@ -1,82 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Medici Assessment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medici Assessment Webpage</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #e0f7f6 100%);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-content: center;
+            padding: 20px;
         }
+
         .container {
             text-align: center;
             background: white;
-            padding: 60px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 600px;
+            padding: 80px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 128, 128, 0.15);
+            max-width: 700px;
+            width: 100%;
         }
+
+        .header-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+
         h1 {
-            color: #333;
-            margin: 0 0 20px 0;
-            font-size: 2.5em;
+            color: #008080;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
+
         .subtitle {
-            color: #666;
-            font-size: 1.2em;
-            margin: 10px 0;
+            color: #20b2aa;
+            font-size: 20px;
+            margin-bottom: 40px;
+            font-weight: 300;
         }
-        .info {
-            background: #f0f0f0;
+
+        .divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #20b2aa);
+            margin: 30px auto;
+            border-radius: 2px;
+        }
+
+        .status {
+            background: #f0fffe;
+            border-left: 4px solid #008080;
             padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
             text-align: left;
         }
-        .info p {
-            margin: 10px 0;
-            color: #555;
+
+        .status-title {
+            color: #008080;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
-        .badge {
+
+        .status-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .status-indicator {
             display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            font-size: 0.9em;
+            width: 12px;
+            height: 12px;
+            background: #4caf50;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e0f7f6;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer-link {
+            color: #008080;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+
+        .footer-link:hover {
+            color: #20b2aa;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 50px 30px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .header-icon {
+                font-size: 60px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Hello World</h1>
-        <p class="subtitle">Medici Assessment - CI/CD Pipeline Test</p>
+        <div class="header-icon">🏥</div>
         
-        <div class="info">
-            <p><strong>✅ Successfully Deployed via:</strong></p>
-            <div>
-                <span class="badge">GitHub Actions</span>
-                <span class="badge">Docker</span>
-                <span class="badge">ECR</span>
-                <span class="badge">Terraform</span>
+        <h1>Medici Assessment Webpage</h1>
+        
+        <p class="subtitle">AWS DevOps Infrastructure</p>
+        
+        <div class="divider"></div>
+        
+        <div class="status">
+            <div class="status-title">
+                <span class="status-indicator"></span>
+                System Status: Operational
             </div>
-            <p style="margin-top: 20px;"><strong>Infrastructure:</strong></p>
-            <p>• VPC with Public & Private Subnets</p>
-            <p>• EC2 Instance with Docker</p>
-            <p>• RDS MySQL Database</p>
-            <p>• ECR Container Registry</p>
-            <p>• Automated CI/CD Pipeline</p>
+            <p class="status-text">
+                All infrastructure components are running smoothly. The Medici Assessment infrastructure is fully deployed and operational with automated monitoring and deployment pipelines.
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Medici Assessment</p>
+            <p style="margin-top: 15px;">
+                <a href="https://github.com/jasonklaskey/medici-assessment" class="footer-link">GitHub</a>
+                •
+                <a href="#" class="footer-link">Documentation</a>
+                •
+                <a href="#" class="footer-link">Status</a>
+            </p>
         </div>
     </div>
 </body>
 </html>
-<!-- Test approval -->
-# Test deployment - Thu 26 Feb 2026 23:34:05 SAST
-# SSH fix - Thu 26 Feb 2026 23:43:37 SAST
-# Workflow fix - Thu 26 Feb 2026 23:47:35 SAST
-# Test - Thu 26 Feb 2026 23:52:39 SAST
