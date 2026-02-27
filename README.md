@@ -226,3 +226,8 @@ Jason Laskey
 - GitHub: https://github.com/jasonklaskey/medici-assessment
 - AWS Region: eu-west-1 (Ireland)
 - Web Server: http://34.255.179.146
+
+## 📊 Architecture Diagrams
+
+- [Network Architecture Diagram](./docs/NETWORK_DIAGRAM.md) - ASCII network visualization
+- [Visual Architecture Diagram](./docs/diagram-2.md) - Interactive Mermaid diagram
