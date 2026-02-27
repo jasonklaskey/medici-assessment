@@ -290,8 +290,10 @@ GitHub Actions automates your deployment. Testing ensures workflow triggers, bui
 
 Run these tests weekly:
 
+==>bash
 curl http://34.255.179.146
 aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db --region eu-west-1
+==>
 
 ---
 
@@ -336,3 +338,10 @@ aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-d
 - [ ] Test 5.4: Verify Deployment
 
 Once all tests pass, your infrastructure is ready for production!
+
+## 📚 Related Documentation
+
+- [README.md](README.md) - Project overview
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture
+- [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Deployment instructions
+- [CTO_PRESENTATION.md](CTO_PRESENTATION.md) - Executive summary
