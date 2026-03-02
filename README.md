@@ -183,7 +183,7 @@ Complete documentation is available:
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Detailed system architecture and design
 - [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Step-by-step deployment instructions
 - [CTO_PRESENTATION.md](CTO_PRESENTATION.md) - Executive summary and business case
-- [VISUAL_ARCHITECTURE.md](diagram-2.md) - Visual Architecture
+- [VISUAL_ARCHITECTURE.md](./docs/diagram-2.md) - Visual Architecture
 
 ## 🛠️ Troubleshooting
 
