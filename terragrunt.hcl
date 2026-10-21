@@ -1,7 +1,7 @@
 remote_state {
   backend = "s3"
   config = {
-    bucket         = "medici-assessment-tfstate-205883165886"
+    bucket         = "medici-assessment-tfstate-${get_aws_account_id()}"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "eu-west-1"
     encrypt        = true

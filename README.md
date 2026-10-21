@@ -95,10 +95,10 @@ See [TESTING_GUIDE.md](TESTING_GUIDE.md) for comprehensive testing procedures.
 
 ```bash
 # Test web server
-curl http://34.255.179.146
+curl http://<ec2-public-ip>
 
 # SSH into EC2
-ssh -i medici-assessment-key.pem ec2-user@34.255.179.146
+ssh -i medici-assessment-key.pem ec2-user@<ec2-public-ip>
 
 # Check running containers
 docker ps
@@ -226,7 +226,7 @@ Jason Laskey
 
 - GitHub: https://github.com/jasonklaskey/medici-assessment
 - AWS Region: eu-west-1 (Ireland)
-- Web Server: http://34.255.179.146
+- Web Server: http://<ec2-public-ip>
 ## 📊 Architecture Diagram
 
 - [Visual Architecture Diagram](./docs/diagram-2.md) - Interactive Mermaid diagram showing VPC, EC2, RDS, ECR, and CI/CD pipeline

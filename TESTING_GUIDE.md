@@ -89,7 +89,7 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=medici-assessment-web
 **Expected Output:**
 - InstanceId: i-0f869128b090fdeba
 - State: running
-- PublicIpAddress: 34.255.179.146
+- PublicIpAddress: <ec2-public-ip>
 - PrivateIpAddress: 10.0.1.80
 
 ---
@@ -102,7 +102,7 @@ aws ec2 describe-instances --filters "Name=tag:Name,Values=medici-assessment-web
 1. Run the following command:
 
 ```bash
-ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146 "echo 'SSH works!'"
+ssh -i ~/medici-assessment-key.pem ec2-user@<ec2-public-ip> "echo 'SSH works!'"
 ```
 
 **Expected Output:**
@@ -128,7 +128,7 @@ The web server serves your application. Testing ensures Nginx is running, Docker
 1. Run the following command:
 
 ```bash
-curl http://34.255.179.146
+curl http://<ec2-public-ip>
 ```
 
 2. Look at HTML output
@@ -152,7 +152,7 @@ curl http://34.255.179.146
 1. SSH into EC2:
 
 ```bash
-ssh -i /Users/jasonlaskey/medici-assessment-key.pem ec2-user@34.255.179.146
+ssh -i ~/medici-assessment-key.pem ec2-user@<ec2-public-ip>
 ```
 
 2. Run the following command:
@@ -165,7 +165,7 @@ docker ps
 
 **Expected Output:**
 - Container ID: e3ae4627759d
-- Image: 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
+- Image: <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
 - Status: Up 3 minutes
 - Ports: 0.0.0.0:80->80/tcp
 
@@ -275,7 +275,7 @@ GitHub Actions automates your deployment. Testing ensures workflow triggers, bui
 1. Run the following commands:
 
 ```bash
-cd /Users/jasonlaskey/Projects/medici-assessment
+cd ~/Projects/medici-assessment
 echo "# Test $(date)" >> docker/index.html
 git add docker/index.html
 git commit -m "Test: Trigger workflow"
@@ -333,7 +333,7 @@ git push origin main
 2. Run the following command:
 
 ```bash
-curl http://34.255.179.146
+curl http://<ec2-public-ip>
 ```
 
 3. SSH into EC2 and run:
@@ -376,7 +376,7 @@ docker ps
 Run these tests weekly:
 
 ```bash
-curl http://34.255.179.146
+curl http://<ec2-public-ip>
 aws rds describe-db-instances --db-instance-identifier medici-assessment-mysql-db --region eu-west-1
 ```
 

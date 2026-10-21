@@ -81,7 +81,7 @@ Outbound:
 - Instance Type: t3.micro
 - AMI: Amazon Linux 2
 - Availability Zone: eu-west-1a
-- Public IP: 34.255.179.146
+- Public IP: <ec2-public-ip>
 - Private IP: 10.0.1.80
 - Root Volume: 8 GB gp2
 
@@ -107,7 +107,7 @@ Outbound:
 ### ECR Repository
 
 - Repository Name: medici-assessment-ecr
-- Registry ID: 205883165886
+- Registry ID: <aws-account-id>
 - Region: eu-west-1
 - Image Scanning: Enabled on push
 
