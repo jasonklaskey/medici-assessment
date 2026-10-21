@@ -367,5 +367,5 @@ Key talking points:
 
 - GitHub: https://github.com/jasonklaskey/medici-assessment
 - AWS Region: eu-west-1 (Ireland)
-- Web Server: http://34.255.179.146
+- Web Server: http://<ec2-public-ip>
 - Documentation: See README.md, ARCHITECTURE.md, DEPLOYMENT_GUIDE.md, TESTING_GUIDE.md

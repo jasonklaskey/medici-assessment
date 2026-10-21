@@ -12,7 +12,7 @@ on:
 env:
   AWS_REGION: eu-west-1
   ECR_REPOSITORY: medici-assessment-ecr
-  ECR_REGISTRY: 205883165886.dkr.ecr.eu-west-1.amazonaws.com
+  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-west-1.amazonaws.com
   IMAGE_TAG: latest
 
 jobs:

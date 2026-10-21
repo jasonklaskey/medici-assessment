@@ -116,13 +116,13 @@ docker rm test-nginx
 
 ```bash
 # Get ECR login token
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 205883165886.dkr.ecr.eu-west-1.amazonaws.com
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com
 
 # Tag image
-docker tag medici-assessment:latest 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
+docker tag medici-assessment:latest <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
 
 # Push to ECR
-docker push 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
+docker push <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
 ```
 
 ### Step 4: Deploy to EC2
@@ -137,17 +137,17 @@ On the EC2 instance:
 
 ```bash
 # Login to ECR
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 205883165886.dkr.ecr.eu-west-1.amazonaws.com
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com
 
 # Pull latest image
-docker pull 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
+docker pull <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
 
 # Stop old container
 docker stop nginx-server || true
 docker rm nginx-server || true
 
 # Run new container
-docker run -d -p 80:80 --name nginx-server 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
+docker run -d -p 80:80 --name nginx-server <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:latest
 ```
 
 ### Step 5: Verify Application
@@ -307,7 +307,7 @@ ssh -i /path/to/key.pem ec2-user@<EC2_PUBLIC_IP>
 docker stop nginx-server
 
 # Run previous version
-docker run -d -p 80:80 --name nginx-server 205883165886.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:previous-tag
+docker run -d -p 80:80 --name nginx-server <aws-account-id>.dkr.ecr.eu-west-1.amazonaws.com/medici-assessment-ecr:previous-tag
 ```
 
 ## Maintenance Tasks

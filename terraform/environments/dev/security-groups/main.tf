@@ -42,6 +42,12 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "ssh_allowed_cidrs" {
+  description = "CIDR blocks allowed to SSH to the web server. Default keeps the GitHub Actions deploy working (hosted runners have no fixed IP). Restrict this, or move deploys to AWS SSM Session Manager, for anything beyond a demo."
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 # Security Group for EC2
 resource "aws_security_group" "ec2" {
   name        = "${var.project_name}-ec2-sg"
@@ -68,7 +74,7 @@ resource "aws_security_group" "ec2" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.ssh_allowed_cidrs
     description = "Allow SSH"
   }
 

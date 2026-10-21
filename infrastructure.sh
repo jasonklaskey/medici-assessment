@@ -96,7 +96,8 @@ clear_remote_state() {
   echo -e "${YELLOW}Clearing remote Terraform state...${NC}"
   
   # Clear S3 state files
-  aws s3 rm s3://medici-assessment-tfstate-205883165886/ --recursive --region eu-west-1 2>/dev/null || true
+  ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+  aws s3 rm "s3://medici-assessment-tfstate-${ACCOUNT_ID}/" --recursive --region eu-west-1 2>/dev/null || true
   
   sleep 2
   
